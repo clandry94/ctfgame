@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
+<body>
+
+<h1>Welcome to the challenge</h1>
+
+<p>Same rules apply as the other challenges. Hint: submit</p>
+<p>RULES</p>
+
+<p>All flags must be submitted in ALL CAPS.</p>
+<p>All flags are composed of SIT- (first 4 chars) followed by 8 hexadecimal characters (0-9, a-f). (Ex: SIT-1234ABCD)</p>
+<p>No attacking the challenge hosting server (hackerhut.net).</p>
+<p>Keep the challenges fun for others! No spoilers over IRC or the mailing list please.</p>
+
+<p>Name: <input type="text" id="inputName" name="name"></p>
+<p>Key: <input type="text" id="inputKey" name="key"></p>
+
+<button id="submitButton" type="button">Submit</button>
+<a href="http://conorjlandry.com/ctf/check/listnames.php"><button type="button">View Attempts</button></a>
+</body>
+
+<script>
+$(document).ready(function () {
+$('#submitButton').click(function(){
+		var name = $("#inputName").val();
+		var key = $("#inputKey").val();
+		
+			$.ajax({ 
+			type: "POST",
+			url: '/ctf/check/checkkey.php',
+			data: {'name': "" + name + "", 'key': "" + key + ""},
+			
+			success: function(response) {
+					var obj = $.parseJSON(response);
+					if (response.status == "2") {					
+						alert(obj.comment);					
+					}
+					else if (response.status == "1") {					
+						alert(obj.comment);
+					}
+					else {
+						 
+					alert(obj.comment);
+				}
+			 }
+		});
+	});	
+});
+
+</script>
+</html>
